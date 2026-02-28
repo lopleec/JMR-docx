@@ -30,8 +30,8 @@ The script first prints candidate links.
 
 Then do a second pass:
 - Open top links with `web_fetch`
-- Summarize same-day news in Chinese (2-4 句，不要太短)
-- Keep only concrete items (title + summary + source link)
+- Summarize same-day news in Chinese with replacement style (让用户不看原文也知道核心)
+- Keep only concrete items (title + summary + source link + one short quote)
 - Prioritize important stories only (model releases, major research, funding/layoffs, policy, infra)
 - Drop low-value items (dictionary pages, SEO pages, unrelated listicles)
 
