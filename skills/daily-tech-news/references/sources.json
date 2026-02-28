@@ -37,5 +37,15 @@
       "category": "Tech",
       "query": "latest technology news {date}"
     }
+  ],
+  "trusted_domains": [
+    "news.mit.edu",
+    "tldr.tech",
+    "techcrunch.com",
+    "theverge.com",
+    "venturebeat.com",
+    "technologyreview.com",
+    "arstechnica.com",
+    "wired.com"
   ]
 }

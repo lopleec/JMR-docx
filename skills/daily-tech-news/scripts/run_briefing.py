@@ -75,8 +75,8 @@ def pick_relevant(items: List[Dict], site: str, limit: int) -> List[Dict]:
     return items[:limit]
 
 
-def keyword_filter(items: List[Dict], category: str) -> List[Dict]:
-    """通用搜索做关键词过滤，减少离题内容。"""
+def keyword_filter(items: List[Dict], category: str, trusted_domains: List[str]) -> List[Dict]:
+    """通用搜索做关键词+域名过滤，减少离题内容。"""
     kw = {
         "AI": ["ai", "artificial intelligence", "llm", "machine learning", "openai", "anthropic", "gemini"],
         "Tech": ["tech", "technology", "software", "startup", "chip", "apple", "google", "microsoft"],
@@ -84,8 +84,11 @@ def keyword_filter(items: List[Dict], category: str) -> List[Dict]:
 
     out = []
     for x in items:
+        url = x.get("url", "").lower()
         txt = (x.get("title", "") + " " + x.get("snippet", "")).lower()
-        if any(k in txt for k in kw):
+        domain_ok = any(d in url for d in trusted_domains) if trusted_domains else True
+        kw_ok = any(k in txt for k in kw)
+        if domain_ok and kw_ok:
             out.append(x)
     return out
 
@@ -93,6 +96,8 @@ def keyword_filter(items: List[Dict], category: str) -> List[Dict]:
 def collect(date_str: str, per_query_limit: int, final_limit: int) -> Dict[str, List[Dict]]:
     cfg = json.loads(CONFIG_PATH.read_text())
     buckets = {"AI": [], "Tech": []}
+
+    trusted_domains = cfg.get("trusted_domains", [])
 
     # 1) 逐来源抓取
     for src in cfg.get("sources", []):
@@ -111,7 +116,7 @@ def collect(date_str: str, per_query_limit: int, final_limit: int) -> Dict[str, 
         cat = eq.get("category", "Tech")
         q = eq.get("query", "").format(date=date_str)
         res = run_bing(q, per_query_limit)
-        res = keyword_filter(res, cat)
+        res = keyword_filter(res, cat, trusted_domains)
         for r in res:
             r.setdefault("source", "Search")
             buckets.setdefault(cat, []).append(r)
@@ -119,6 +124,39 @@ def collect(date_str: str, per_query_limit: int, final_limit: int) -> Dict[str, 
     # 3) 去重 + 截断
     for cat in list(buckets.keys()):
         buckets[cat] = dedupe(buckets[cat])[:final_limit]
+
+    # 4) 若某类为空，至少给固定来源入口，避免空报
+    if not buckets.get("AI"):
+        buckets["AI"] = [
+            {
+                "title": "MIT AI Topic Page",
+                "url": "https://news.mit.edu/topic/artificial-intelligence2",
+                "snippet": "Fallback source page for same-day AI updates.",
+                "source": "MIT AI",
+            },
+            {
+                "title": "TLDR AI",
+                "url": "https://tldr.tech/ai",
+                "snippet": "Fallback source page for daily AI newsletter updates.",
+                "source": "TLDR AI",
+            },
+        ][:final_limit]
+
+    if not buckets.get("Tech"):
+        buckets["Tech"] = [
+            {
+                "title": "TLDR Tech",
+                "url": "https://tldr.tech/tech",
+                "snippet": "Fallback source page for daily tech newsletter updates.",
+                "source": "TLDR Tech",
+            },
+            {
+                "title": "MIT News",
+                "url": "https://news.mit.edu/",
+                "snippet": "Fallback source page for latest technology coverage.",
+                "source": "MIT News",
+            },
+        ][:final_limit]
 
     return buckets
 
