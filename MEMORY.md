@@ -24,4 +24,5 @@
 - Default self-check before every send: rewrite once to be more human (shorter, less formal, less templated) without waiting for user reminder.
 - For long-running tasks: if user messages during execution, first send quick ack ("收到"), briefly state plan, then continue and return final result after completion.
 - Privilege rule: keep permissions strict by default. Any sudo/admin/elevated action requires explicit user approval each time before execution.
+- Sudo password handling: treat every password as one-time. Ask user again each time before privileged execution; never assume or reuse prior password.
 - Do not store plaintext passwords in long-term memory; treat them as sensitive and ephemeral.
