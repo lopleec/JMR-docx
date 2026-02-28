@@ -1,0 +1,41 @@
+{
+  "sources": [
+    {
+      "name": "MIT AI",
+      "category": "AI",
+      "site": "news.mit.edu",
+      "queries": [
+        "site:news.mit.edu artificial intelligence {date}",
+        "site:news.mit.edu machine learning {date}"
+      ]
+    },
+    {
+      "name": "TLDR AI",
+      "category": "AI",
+      "site": "tldr.tech",
+      "queries": [
+        "site:tldr.tech AI news {date}",
+        "site:tldr.tech LLM {date}"
+      ]
+    },
+    {
+      "name": "TLDR Tech",
+      "category": "Tech",
+      "site": "tldr.tech",
+      "queries": [
+        "site:tldr.tech tech news {date}",
+        "site:tldr.tech startup {date}"
+      ]
+    }
+  ],
+  "engine_queries": [
+    {
+      "category": "AI",
+      "query": "latest AI news {date}"
+    },
+    {
+      "category": "Tech",
+      "query": "latest technology news {date}"
+    }
+  ]
+}
