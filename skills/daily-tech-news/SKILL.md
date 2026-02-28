@@ -26,10 +26,12 @@ python3 skills/daily-tech-news/scripts/run_briefing.py --limit 5 --date 2026-02-
 
 ## Output
 
-The script prints markdown with:
-- AI news section
-- Tech news section
-- Source links
+The script first prints candidate links.
+
+Then do a second pass:
+- Open top links with `web_fetch`
+- Summarize same-day news in Chinese (简洁)
+- Keep only concrete items (title + one-line summary + source link)
 
 ## Extending sources
 
