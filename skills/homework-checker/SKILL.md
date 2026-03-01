@@ -7,17 +7,31 @@ description: Check student assignments from ManageBac accurately by scanning Cal
 
 Use this workflow for ManageBac homework checks.
 
+## Fixed URLs (must use)
+
+- Calendar: `https://hdkwa.managebac.cn/student/calendar`
+- Tasks & Deadlines: `https://hdkwa.managebac.cn/student/tasks_and_deadlines`
+
 ## Core workflow (strict)
 
-1. Open `https://hdkwa.managebac.cn/student/calendar`.
-2. Read Calendar month/week to find upcoming task dates.
-3. Open `https://hdkwa.managebac.cn/student/tasks_and_deadlines?view=upcoming`.
-4. Collect ALL upcoming tasks (title, due time, class, type, status, task URL).
-5. Open each task URL and read Description.
-6. If description is empty or vague, check attachments and class/task context.
-7. If attachment exists and is relevant (worksheet, instructions, rubric), download it.
-8. Score urgency using `scripts/score_tasks.py`.
-9. Return final list sorted by urgency descending, with no missing items.
+1. Open Calendar URL and read month/week for upcoming task dates.
+2. Open Tasks & Deadlines URL (Upcoming view) and collect ALL upcoming tasks (title, due time, class, type, status, task URL).
+3. Open each task URL and read Description.
+4. If description is empty or vague, check attachments and class/task context.
+5. If attachment exists and is relevant (worksheet, instructions, rubric), download it.
+6. Score urgency using `scripts/score_tasks.py`.
+7. Return final list sorted by urgency descending, with no missing items.
+
+## Repeat reminder rule
+
+- If a task was already mentioned in the previous report and deadline has NOT passed, mention it again in the next report.
+- If deadline has passed, stop repeating it.
+
+## Login/session rule
+
+- If page shows logged-out state, SSO page, or missing session, STOP.
+- Do not try password/auto-login by yourself.
+- Ask user to log in first, then continue.
 
 ## Required output fields per task
 
