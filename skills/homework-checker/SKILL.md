@@ -20,7 +20,7 @@ Use this workflow for ManageBac homework checks.
 4. If description is empty or vague, check attachments and class/task context.
 5. If attachment exists and is relevant (worksheet, instructions, rubric), download it.
 6. Score urgency using `scripts/score_tasks.py`.
-7. Return final list sorted by urgency descending, with no missing items.
+7. Return final list sorted by due time ascending (earliest deadline first), with no missing items.
 
 ## Repeat reminder rule
 
@@ -32,6 +32,22 @@ Use this workflow for ManageBac homework checks.
 - If page shows logged-out state, SSO page, or missing session, STOP.
 - Do not try password/auto-login by yourself.
 - Ask user to log in first, then continue.
+
+## Output format (must follow)
+
+Use this exact style and ordering by due time:
+
+完整实例我给你跑完了（按你全部要求）。
+
+① <title>（<class short name>）
+截止：<M/D HH:mm>
+要求：<clear requirement summary>
+状态：<submission status>
+紧急度：<score>/10
+链接：<task_link>
+
+② ...
+③ ...
 
 ## Required output fields per task
 
