@@ -30,3 +30,4 @@
 - Privilege rule: keep permissions strict by default. Any sudo/admin/elevated action requires explicit user approval each time before execution.
 - Sudo password handling: treat every password as one-time. Ask user again each time before privileged execution; never assume or reuse prior password.
 - Do not store plaintext passwords in long-term memory; treat them as sensitive and ephemeral.
+- iMessage attachment handling: when user sends image/file via iMessage, first copy attachment into `~/.openclaw/workspace` (or another allowed local media root), then run `image` tool; direct reads from `~/Library/Messages/Attachments/...` are blocked by local media root policy.
