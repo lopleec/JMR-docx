@@ -1,3 +1,243 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>OpenCode 专区</title><link rel="stylesheet" href="../assets/style.css"/></head>
-<body><div class="layout"><aside class="sidebar" id="sidebar"><div class="brand">JMR API 官方文档</div><div class="sub">OpenCode 专区</div><nav class="nav"><a href="../index.html">返回首页</a><a class="active" href="./index.html">OpenCode 专区（暂未开放）</a></nav></aside>
-<main class="main"><div class="topbar"><button class="menu-btn" id="menuBtn">☰</button><strong>OpenCode 专区</strong></div><article class="content"><h1>OpenCode 专区</h1><p>这个专区先不写，后续再补。</p></article></main></div><script src="../assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenCode 配置文档</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">OpenCode 专区</div>
+      <nav class="nav">
+        <a href="../index.html">返回首页</a>
+        <a href="../openclaw/index.html">OpenClaw 专区</a>
+        <a href="../models/index.html">模型列表专区</a>
+        <a class="active" href="./index.html">OpenCode 专区</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>OpenCode 专区</strong>
+      </div>
+
+      <article class="content">
+        <h1>OpenCode 配置文档</h1>
+        <p>一个 API Key，直接生成可复制的完整配置文件。</p>
+
+        <h2>1）配置文件路径</h2>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="opencodePath">复制</button>
+          <pre id="opencodePath" class="code">~/.config/opencode/opencode.json
+# 或
+~/.config/opencode/opencode.jsonc
+
+# 不存在需手动创建</pre>
+        </div>
+
+        <h2>2）替换方式</h2>
+        <div class="card">
+          全部替换原文件中的内容。
+        </div>
+
+        <h2>3）填写 API Key 并复制配置</h2>
+        <div class="form-grid">
+          <div class="full">
+            <label>API Key</label>
+            <input id="opencodeApiKey" class="cfg" placeholder="⚠️此处填写您的API Key ⚠️" />
+          </div>
+        </div>
+
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="opencodeConfig">复制配置</button>
+          <textarea id="opencodeConfig" class="code" spellcheck="false"></textarea>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    (() => {
+      const keyInput = document.getElementById('opencodeApiKey');
+      const output = document.getElementById('opencodeConfig');
+      if (!keyInput || !output) return;
+
+      const render = () => {
+        const apiKey = (keyInput.value || '⚠️此处填写您的API Key ⚠️').trim();
+        output.value = `{
+  "provider": {
+    "openai": {
+      "options": {
+        "baseURL": "https://api.ai.org.kg/v1",
+        "apiKey": "${apiKey}"
+      },
+      "models": {
+        "gpt-5-codex": {
+          "name": "GPT-5 Codex",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "gpt-5.1-codex": {
+          "name": "GPT-5.1 Codex",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "gpt-5.1-codex-max": {
+          "name": "GPT-5.1 Codex Max",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "gpt-5.1-codex-mini": {
+          "name": "GPT-5.1 Codex Mini",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "gpt-5.2": {
+          "name": "GPT-5.2",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {},
+            "xhigh": {}
+          }
+        },
+        "gpt-5.3-codex-spark": {
+          "name": "GPT-5.3 Codex Spark",
+          "limit": {
+            "context": 128000,
+            "output": 32000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {},
+            "xhigh": {}
+          }
+        },
+        "gpt-5.3-codex": {
+          "name": "GPT-5.3 Codex",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {},
+            "xhigh": {}
+          }
+        },
+        "gpt-5.2-codex": {
+          "name": "GPT-5.2 Codex",
+          "limit": {
+            "context": 400000,
+            "output": 128000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {},
+            "xhigh": {}
+          }
+        },
+        "codex-mini-latest": {
+          "name": "Codex Mini",
+          "limit": {
+            "context": 200000,
+            "output": 100000
+          },
+          "options": {
+            "store": false
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "options": {
+        "store": false
+      }
+    },
+    "plan": {
+      "options": {
+        "store": false
+      }
+    }
+  },
+  "$schema": "https://opencode.ai/config.json"
+}`;
+      };
+
+      keyInput.addEventListener('input', render);
+      render();
+    })();
+  </script>
+</body>
+</html>
