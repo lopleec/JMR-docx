@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>云端部署 - OpenClaw 部署全教程</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">OpenClaw 总览 · 子页面</div>
+      <nav class="nav">
+        <a href="./index.html">OpenClaw 总览</a>
+        <a href="./quickstart.html">快速开始</a>
+        <a href="./local-deploy.html">本机部署</a>
+        <a class="active" href="./server-deploy.html">云端部署</a>
+        <a href="./ops-security.html">排障与安全</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>JMR API 官方文档</strong>
+      </div>
+      <article class="content">
+        <h1>云端部署（长期在线）</h1>
+
+        <h2>架构建议</h2>
+        <ul>
+          <li>1 台 Linux VPS 常驻运行 gateway</li>
+          <li>密钥使用环境变量或受控配置</li>
+          <li>日志、备份、健康检查独立保留</li>
+        </ul>
+
+        <h2>基础流程</h2>
+        <div class="code"># 1) 安装 OpenClaw
+# 2) 配置 openclaw.json
+# 3) 启动并设为守护进程
+openclaw gateway start
+openclaw status --deep</div>
+
+        <h2>守护进程与开机自启</h2>
+        <p>按系统平台文档使用 LaunchAgent/systemd。目标是服务异常后自动拉起，重启后自动恢复。</p>
+
+        <h2>公网暴露策略</h2>
+        <div class="card">
+          <ul>
+            <li>优先只绑定内网或 loopback，再通过反代暴露</li>
+            <li>开启鉴权，限制来源 IP</li>
+            <li>如果走反代，配置 trusted proxies</li>
+          </ul>
+        </div>
+
+        <h2>上线前检查清单</h2>
+        <div class="code">openclaw security audit --deep
+openclaw status --deep
+openclaw update status</div>
+      </article>
+    </main>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>本机部署 - OpenClaw 部署全教程</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">OpenClaw 总览 · 子页面</div>
+      <nav class="nav">
+        <a href="./index.html">OpenClaw 总览</a>
+        <a href="./quickstart.html">快速开始</a>
+        <a class="active" href="./local-deploy.html">本机部署</a>
+        <a href="./server-deploy.html">云端部署</a>
+        <a href="./ops-security.html">排障与安全</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>JMR API 官方文档</strong>
+      </div>
+      <article class="content">
+        <h1>本机部署（macOS/Linux）</h1>
+
+        <h2>准备项</h2>
+        <ul>
+          <li>Node.js 与 OpenClaw 已安装</li>
+          <li>至少一个模型可用（文本）</li>
+          <li>如需识图，模型必须声明支持 image 输入</li>
+        </ul>
+
+        <h2>启动顺序</h2>
+        <div class="code">openclaw gateway start
+openclaw status --deep</div>
+
+        <h2>iMessage 特别说明</h2>
+        <p>如果你用 iMessage，建议启用附件抓取：</p>
+        <div class="code">{
+  "channels": {
+    "imessage": {
+      "enabled": true,
+      "includeAttachments": true,
+      "attachmentRoots": ["/Users/*/Library/Messages/Attachments"]
+    }
+  }
+}</div>
+        <p>然后重启 gateway：</p>
+        <div class="code">openclaw gateway restart</div>
+
+        <h2>图片识别实践建议</h2>
+        <p>本地媒体读取有安全白名单，建议统一将附件转存到 workspace 后再识别。</p>
+        <div class="code"># 示例思路
+# 1) 附件复制到 ~/.openclaw/workspace
+# 2) 再调用 image 工具识别</div>
+
+        <h2>本机部署优缺点</h2>
+        <div class="card">
+          <ul>
+            <li>优点：调试快，修改配置后反馈快</li>
+            <li>缺点：机器关机或网络变化会中断服务</li>
+          </ul>
+        </div>
+      </article>
+    </main>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
