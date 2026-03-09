@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>OpenClaw 部署方式（简版）</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;color:#222;line-height:1.65;margin:32px}
+h1{color:#1f4e79;text-align:center;margin-bottom:6px}
+.sub{color:#666;text-align:center;font-size:14px;margin-bottom:20px}
+h2{font-size:18px;margin-top:20px;border-left:4px solid #1f4e79;padding-left:10px}
+ul{margin-top:8px}
+li{margin:6px 0}
+.box{background:#f5f8fc;border:1px solid #dbe6f3;border-radius:8px;padding:10px 14px}
+.foot{margin-top:18px;color:#666;font-size:12px}
+</style>
+</head>
+<body>
+<h1>OpenClaw 部署方式（简版）</h1>
+<div class="sub">适合个人 / 家庭服务器 / 小团队，快速上线</div>
+
+<h2>1）本机部署（最快）</h2>
+<ul>
+<li>场景：自己电脑上直接跑，调试最方便。</li>
+<li>步骤：安装 OpenClaw → 配置通道（如 iMessage / Telegram）→ 启动 gateway。</li>
+<li>优点：上手快；缺点：电脑关机就离线。</li>
+</ul>
+
+<h2>2）云服务器部署（稳定）</h2>
+<ul>
+<li>场景：希望 24/7 在线、可远程访问。</li>
+<li>步骤：准备 Linux VPS → 安装 OpenClaw → 配置密钥与通道 → 设守护进程。</li>
+<li>优点：稳定在线；缺点：有服务器成本。</li>
+</ul>
+
+<h2>3）家庭局域网部署（隐私优先）</h2>
+<ul>
+<li>场景：家里小主机/NAS 常开，数据尽量本地化。</li>
+<li>步骤：内网机器安装 OpenClaw → 绑定消息渠道 → 按需做外网转发。</li>
+<li>优点：私有化强；缺点：外网访问配置稍复杂。</li>
+</ul>
+
+<div class="box"><b>推荐：</b>先本机验证功能，再迁移到云端长期运行。</div>
+
+<div class="foot">备注：生产环境建议加监控、备份和最小权限策略。</div>
+</body>
+</html>
