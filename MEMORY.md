@@ -35,3 +35,4 @@
 - Browser recovery preference: when browser tool fails, first close/reopen current browser process; only consider gateway restart after user approval.
 - Execution preference: for complex or time-consuming tasks, default to spawning a `subagent`; only skip for tiny one-step actions, explicit request to run in main session, or tasks requiring tight real-time user interaction.
 - Memory persistence rule: when updating deep/long-term memory files (e.g., `MEMORY.md` and related memory curation changes), create a `git commit` to preserve an auditable history.
+- Subagent commit rule: any `subagent` task that changes files must end with a `git commit`; if it is verification-only with no file changes, do not create an empty commit.
