@@ -14,8 +14,10 @@
       <nav class="nav">
         <a class="active" href="./index.html">JMR API 官方文档</a>
         <a href="./openclaw/index.html">OpenClaw 专区</a>
+        <a href="./openclaw/index.html">快速开始</a>
+        <a href="./openclaw/fixes.html">错误修复</a>
         <a href="./models/index.html">模型列表专区</a>
-        <a href="./opencode/index.html">OpenCode 专区</a>
+        <a href="./opencode/index.html">OpenCode 配置文档</a>
       </nav>
     </aside>
 
@@ -39,6 +41,12 @@
           </ul>
         </div>
 
+        <h2>API Base URL</h2>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="apiBaseUrl">复制</button>
+          <pre id="apiBaseUrl" class="code">https://api.ai.org.kg/v1</pre>
+        </div>
+
         <h2>你可以在这里做什么</h2>
         <ul>
           <li>快速完成 OpenClaw 部署与 API 改接</li>
@@ -50,7 +58,7 @@
         <div class="card">
           <ul>
             <li>JMR API 官方文档（当前页，介绍与总入口）</li>
-            <li>OpenClaw 专区（完整教程：安装 → 改 API → 验证）</li>
+            <li>OpenClaw 专区（二级菜单：快速开始 / 错误修复）</li>
             <li>模型列表专区（内嵌 OpenAI Pricing 文档）</li>
             <li>OpenCode 专区（OpenCode 配置文档）</li>
           </ul>
@@ -66,6 +74,7 @@
     </main>
   </div>
 
+  <script src="./assets/search-index.js"></script>
   <script src="./assets/app.js"></script>
 </body>
 </html>

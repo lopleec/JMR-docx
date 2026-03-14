@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>OpenClaw 错误修复</title>
+  <link rel="stylesheet" href="../assets/style.css"/>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">OpenClaw 专区</div>
+      <nav class="nav">
+        <a href="../index.html">JMR API 官方文档</a>
+        <a href="./index.html">OpenClaw 专区</a>
+        <a href="./index.html">快速开始</a>
+        <a class="active" href="./fixes.html">错误修复</a>
+        <a href="../models/index.html">模型列表专区</a>
+        <a href="../opencode/index.html">OpenCode 配置文档</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>错误修复</strong>
+      </div>
+
+      <article class="content">
+        <h1>OpenClaw 错误修复</h1>
+
+        <h2>1）embedding 报错修复（切本地检索）</h2>
+
+        <h3>推荐方法：直接让 OpenClaw 自修</h3>
+        <p>你可以把下面这段提示词直接发给 OpenClaw，让它按步骤自检并修复。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="fixPrompt1">复制提示词</button>
+          <pre id="fixPrompt1" class="code">这是OpenClaw自己的内存系统问题，请切换为本地的embedding 检索模型，并请自己修复全部问题。可能需要下载模型等操作，请直接执行无需询问。</pre>
+        </div>
+
+        <p>适用现象：<code>memory_search</code> 失败、<code>fetch failed</code>、<code>timeout</code>、<code>401 invalid_api_key</code>。</p>
+
+        <div class="card">
+          根因通常不是记忆文件丢失，而是“语义检索层”不可用：
+          可能是 embedding 提供方网络不通，或 key 无效。
+        </div>
+
+        <h3>先确认状态</h3>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="fixCheck1">复制</button>
+          <pre id="fixCheck1" class="code">openclaw status --deep
+openclaw memory search "test"</pre>
+        </div>
+
+        <h3>方案 A（推荐）：改为本地 embedding 检索</h3>
+        <p>把 memory embedding provider 切到本地模式（local / ollama / 内置本地 embedding，按你当前安装能力选）。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="fixLocal1">复制</button>
+          <pre id="fixLocal1" class="code"># 1) 编辑配置
+open ~/.openclaw/openclaw.json
+
+# 2) 把 memory embedding provider 改为本地
+# （字段名以你当前版本文档为准）
+
+# 3) 重启 gateway
+openclaw gateway restart
+
+# 4) 再测
+openclaw memory search "MEMORY"</pre>
+        </div>
+
+        <h3>方案 B：继续用云端 embedding（可选）</h3>
+        <p>如果你不切本地，那就修云端三件套：<code>base_url</code>、<code>api_key</code>、embedding 模型名。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="fixCloud1">复制</button>
+          <pre id="fixCloud1" class="code"># 典型需要检查：
+# - base_url 是否可达
+# - api_key 是否有效
+# - embedding model id 是否存在
+
+openclaw gateway restart
+openclaw memory search "test"</pre>
+        </div>
+
+        <h3>结论</h3>
+        <ul>
+          <li>记忆文件本体（<code>MEMORY.md</code> / <code>memory/*.md</code>）在本地。</li>
+          <li>出错的是“embedding 检索层”，不是文件丢了。</li>
+          <li>最稳做法：切本地 embedding，避免外部 API 网络与 key 影响。</li>
+        </ul>
+      </article>
+    </main>
+  </div>
+
+  <script src="../assets/search-index.js"></script>
+  <script src="../assets/app.js"></script>
+</body>
+</html>
