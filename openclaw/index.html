@@ -82,6 +82,56 @@ npm install -g openclaw@latest</pre>
           <textarea id="generatedConfig" class="code" spellcheck="false"></textarea>
         </div>
 
+        <h3>目前最佳配置文件方法</h3>
+        <p>发送此提示词至任意 AI，发送前需填写“⚠️粘贴原配置文件（onboard后未改动的）于此处⚠️”，不要填写 API 密钥以免泄露。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="bestConfigPrompt">复制提示词</button>
+          <pre id="bestConfigPrompt" class="code">You are a configuration file merge tool for OpenClaw — a locally-running AI assistant framework whose core config file openclaw.json controls model providers, workspace, gateway, and plugins. The goal is to replace the default OpenAI API with a third-party OpenAI-compatible API provider.
+Merge rules:
+ 1. Use the “original config” as the base structure
+ 2. Remove all entries under auth.profiles, keep "profiles": {}
+ 3. Insert the entire top-level models block from the “fields to add/replace” into the original
+ 4. Override agents.defaults.model.primary with the value from the fields to add/replace
+ 5. Override agents.defaults.workspace with the value from the fields to add/replace
+ 6. Leave all other fields in the original config untouched
+ 7. Output only a complete, valid JSON — no explanation, no markdown, no extra text
+Original config:
+
+⚠️粘贴原配置文件（onboard后未改动的）于此处⚠️
+
+Fields to add/replace:
+
+{
+ "models": {
+ "mode": "merge",
+ "providers": {
+ "jmr": {
+ "baseUrl": "https://api.ai.org.kg/v1",
+ "apiKey": "⚠️此处填您的API密钥⚠️",
+ "api": "openai-responses",
+ "models": [
+ {
+ "id": "⚠️此处填您的模型ID⚠️",
+ "name": "⚠️此处填您的模型ID⚠️",
+ "reasoning": true,
+ "contextWindow": 200000,
+ "maxTokens": 32000
+ }
+ ]
+ }
+ }
+ },
+ "agents": {
+ "defaults": {
+ "model": {
+ "primary": "jmr/⚠️此处填您的模型ID⚠️"
+ },
+ "workspace": "⚠️此处填您的OpenClaw工作目录，可在原配置文件中查看⚠️"
+ }
+ }
+}</pre>
+        </div>
+
         <h2>4）重启并验证</h2>
         <div class="code-wrap">
           <button class="copy-btn" data-copy-target="codeVerify">复制</button>

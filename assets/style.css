@@ -80,8 +80,9 @@ li{margin:8px 0}
 .copy-btn:active{transform:scale(.96)}
 .copy-btn.copied{background:var(--panel);border-color:var(--code-border);box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 14%, transparent)}
 .copy-btn.pulse{animation:copyPulse .45s ease}
-pre.code,textarea.code{background:var(--code-bg);color:var(--code-text);border:1px solid var(--code-border);border-radius:10px;padding:14px 14px;overflow:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre}
-textarea.code{width:100%;min-height:340px;resize:vertical}
+pre.code,textarea.code{background:var(--code-bg);color:var(--code-text);border:1px solid var(--code-border);border-radius:10px;padding:14px 14px;overflow-y:auto;overflow-x:hidden;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+pre.code{max-height:340px}
+textarea.code{width:100%;min-height:340px;max-height:70vh;resize:vertical}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form-grid .full{grid-column:1/-1}
 input.cfg{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:var(--bg);color:var(--text)}
