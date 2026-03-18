@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grok 专区</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">Grok 专区</div>
+      <nav class="nav">
+        <a href="../index.html">JMR API 官方文档</a>
+        <a href="../openclaw/index.html">OpenClaw 专区</a>
+        <a href="../openclaw/index.html">快速开始</a>
+        <a href="../openclaw/fixes.html">错误修复</a>
+        <a href="../models/index.html">模型列表专区</a>
+        <a class="active" href="./index.html">Grok 专区</a>
+        <a href="../opencode/index.html">OpenCode 配置文档</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>Grok 专区</strong>
+      </div>
+
+      <article class="content">
+        <h1>Grok 专区</h1>
+        <p>基于 OpenAI 兼容接口，支持聊天、图像生成、图像编辑、视频生成、LiveChat token 等能力。</p>
+
+        <h2><code>POST /v1/chat/completions</code></h2>
+        <p>通用接口，支持对话聊天、图像生成、图像编辑、视频生成、视频超分。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokChat">复制</button>
+          <pre id="grokChat" class="code">curl http://localhost:8000/v1/chat/completions \
+ -H "Content-Type: application/json" \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ -d '{
+ "model": "grok-4",
+ "messages": [{"role":"user","content":"你好"}]
+ }'</pre>
+        </div>
+
+        <details>
+          <summary>支持的请求参数</summary>
+          <br>
+          <div class="card" style="overflow:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:900px">
+              <thead>
+                <tr>
+                  <th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">字段</th>
+                  <th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">类型</th>
+                  <th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">说明</th>
+                  <th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">可用参数</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>model</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">模型名称</td><td style="padding:8px;border-bottom:1px solid var(--line)">见模型列表</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>messages</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">array</td><td style="padding:8px;border-bottom:1px solid var(--line)">消息列表</td><td style="padding:8px;border-bottom:1px solid var(--line)">见下方消息格式</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>stream</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">boolean</td><td style="padding:8px;border-bottom:1px solid var(--line)">是否开启流式输出</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>true</code>, <code>false</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>reasoning_effort</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">推理强度</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>none/minimal/low/medium/high/xhigh</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>temperature</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">number</td><td style="padding:8px;border-bottom:1px solid var(--line)">采样温度</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>0~2</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>top_p</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">number</td><td style="padding:8px;border-bottom:1px solid var(--line)">nucleus 采样</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>0~1</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>tools</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">array</td><td style="padding:8px;border-bottom:1px solid var(--line)">工具定义</td><td style="padding:8px;border-bottom:1px solid var(--line)">OpenAI function tools</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>tool_choice</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string/object</td><td style="padding:8px;border-bottom:1px solid var(--line)">工具选择</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>auto/required/none</code> 或指定工具</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>parallel_tool_calls</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">boolean</td><td style="padding:8px;border-bottom:1px solid var(--line)">并行工具调用</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>true</code>, <code>false</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>video_config</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">object</td><td style="padding:8px;border-bottom:1px solid var(--line)">视频模型专用配置</td><td style="padding:8px;border-bottom:1px solid var(--line)">仅 <code>grok-imagine-1.0-video</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>aspect_ratio</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">视频宽高比</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>16:9/9:16/1:1/2:3/3:2/1280x720/720x1280/1792x1024/1024x1792/1024x1024</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>video_length</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">integer</td><td style="padding:8px;border-bottom:1px solid var(--line)">视频时长</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>6~30</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>resolution_name</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">分辨率</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>480p/720p</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>preset</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">风格预设</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>fun/normal/spicy/custom</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>image_config</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">object</td><td style="padding:8px;border-bottom:1px solid var(--line)">图片模型专用配置</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>grok-imagine-1.0/-fast/-edit</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>n</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">integer</td><td style="padding:8px;border-bottom:1px solid var(--line)">生成数量</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>1~10</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>size</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">图片尺寸</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>1280x720/720x1280/1792x1024/1024x1792/1024x1024</code></td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid var(--line)">└─<code>response_format</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">响应格式</td><td style="padding:8px;border-bottom:1px solid var(--line)"><code>url/b64_json/base64</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>消息格式 (messages)</strong></p>
+          <ul>
+            <li><code>role</code>：<code>developer/system/user/assistant</code></li>
+            <li><code>content</code>：支持字符串或多模态数组</li>
+          </ul>
+
+          <p><strong>多模态内容块类型</strong></p>
+          <ul>
+            <li><code>text</code>：<code>{"type":"text","text":"描述这张图片"}</code></li>
+            <li><code>image_url</code>：<code>{"type":"image_url","image_url":{"url":"https://..."}}</code></li>
+            <li><code>input_audio</code>：<code>{"type":"input_audio","input_audio":{"data":"https://..."}}</code></li>
+            <li><code>file</code>：<code>{"type":"file","file":{"file_data":"https://..."}}</code></li>
+          </ul>
+
+          <p><strong>注意事项</strong></p>
+          <ul>
+            <li><code>image_url/input_audio/file</code> 仅支持 URL 或 Data URI；裸 base64 会报错。</li>
+            <li><code>reasoning_effort=none</code> 不输出思考，其他值会输出思考内容。</li>
+            <li>工具调用为“提示词模拟 + 客户端执行回填”，服务端不执行工具。</li>
+            <li><code>grok-imagine-1.0-edit</code> 必须提供图片，多图默认取最后 3 张与最后一段文本。</li>
+            <li><code>grok-imagine-1.0-video</code> 支持文生视频/图生视频（<code>image_url</code> 仅取第 1 张）。</li>
+          </ul>
+          <br>
+        </details>
+
+        <h2><code>GET /v1/livechat/token</code></h2>
+        <p>使用 API Key 换取 LiveChat 所需 LiveKit token。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokLivechat">复制</button>
+          <pre id="grokLivechat" class="code">curl http://localhost:8000/v1/livechat/token \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ "?voice=ara&personality=assistant&speed=1"</pre>
+        </div>
+
+        <h3>Query 参数</h3>
+        <div class="card" style="overflow:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:640px">
+            <thead><tr><th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">字段</th><th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">类型</th><th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">说明</th><th style="text-align:left;border-bottom:1px solid var(--line);padding:8px">默认值</th></tr></thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>voice</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">语音角色</td><td style="padding:8px;border-bottom:1px solid var(--line)">ara</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>personality</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">string</td><td style="padding:8px;border-bottom:1px solid var(--line)">角色性格</td><td style="padding:8px;border-bottom:1px solid var(--line)">assistant</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><code>speed</code></td><td style="padding:8px;border-bottom:1px solid var(--line)">number</td><td style="padding:8px;border-bottom:1px solid var(--line)">播放速度</td><td style="padding:8px;border-bottom:1px solid var(--line)">1.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>响应示例</h3>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokLivechatRes">复制</button>
+          <pre id="grokLivechatRes" class="code">{
+ "token": "...",
+ "url": "wss://livekit.grok.com",
+ "participant_name": "",
+ "room_name": ""
+}</pre>
+        </div>
+
+        <h2><code>POST /v1/responses</code></h2>
+        <p>OpenAI Responses API 兼容接口。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokResponses">复制</button>
+          <pre id="grokResponses" class="code">curl http://localhost:8000/v1/responses \
+ -H "Content-Type: application/json" \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ -d '{
+ "model": "grok-4",
+ "input": "解释一下量子隧穿",
+ "stream": true
+ }'</pre>
+        </div>
+
+        <h2><code>POST /v1/images/generations</code></h2>
+        <p>图像生成接口。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokImageGen">复制</button>
+          <pre id="grokImageGen" class="code">curl http://localhost:8000/v1/images/generations \
+ -H "Content-Type: application/json" \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ -d '{
+ "model": "grok-imagine-1.0",
+ "prompt": "一只在太空漂浮的猫",
+ "n": 1
+ }'</pre>
+        </div>
+
+        <h2><code>POST /v1/images/edits</code></h2>
+        <p>图像编辑接口（<code>multipart/form-data</code>）。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokImageEdit">复制</button>
+          <pre id="grokImageEdit" class="code">curl http://localhost:8000/v1/images/edits \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ -F "model=grok-imagine-1.0-edit" \
+ -F "prompt=把图片变清晰" \
+ -F "image=@/path/to/image.png" \
+ -F "n=1"</pre>
+        </div>
+
+        <h2><code>POST /v1/videos</code></h2>
+        <p>视频生成接口（OpenAI <code>videos.create</code> 兼容）。</p>
+        <div class="code-wrap">
+          <button class="copy-btn" data-copy-target="grokVideo">复制</button>
+          <pre id="grokVideo" class="code">curl http://localhost:8000/v1/videos \
+ -H "Content-Type: application/json" \
+ -H "Authorization: Bearer $GROK2API_API_KEY" \
+ -d '{
+ "model": "grok-imagine-1.0-video",
+ "prompt": "霓虹雨夜街头，慢镜头追拍",
+ "size": "1792x1024",
+ "seconds": 18,
+ "quality": "standard"
+ }'</pre>
+        </div>
+
+      </article>
+    </main>
+  </div>
+
+  <script src="../assets/search-index.js"></script>
+  <script src="../assets/app.js"></script>
+</body>
+</html>
