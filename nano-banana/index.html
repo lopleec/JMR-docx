@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nano Banana 专区</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">JMR API 官方文档</div>
+      <div class="sub">Nano Banana 专区</div>
+      <nav class="nav">
+        <a href="../index.html">JMR API 官方文档</a>
+        <a href="../openclaw/index.html">OpenClaw 专区</a>
+        <a href="../openclaw/index.html">快速开始</a>
+        <a href="../openclaw/fixes.html">错误修复</a>
+        <a href="../models/index.html">模型列表专区</a>
+        <a href="../grok/index.html">Grok 专区</a>
+        <a class="active" href="./index.html">Nano Banana 专区</a>
+        <a href="../opencode/index.html">OpenCode 配置文档</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <strong>Nano Banana 专区</strong>
+      </div>
+
+      <article class="content">
+        <h1>Nano Banana 专区</h1>
+        <p><strong>1/draw/nano-banana</strong>，支持 Gemini 官方接口格式。</p>
+
+        <h2>Nano Banana 绘画接口</h2>
+        <p><code>POST /v1/draw/nano-banana</code></p>
+
+        <h3>请求头 Headers</h3>
+        <pre class="code">{
+ "Content-Type": "application/json",
+ "Authorization": "Bearer apikey"
+}</pre>
+
+        <h3>请求参数（JSON）</h3>
+        <pre class="code">{
+ "model": "nano-banana-fast",
+ "prompt": "提示词",
+ "aspectRatio": "auto",
+ "imageSize": "1K",
+ "urls": ["https://example.com/example.png"],
+ "webHook": "https://example.com/callback",
+ "shutProgress": false
+}</pre>
+
+        <h3>参数说明</h3>
+        <ul>
+          <li><code>model</code>（必填）：支持 <code>nano-banana-2</code>、<code>nano-banana-2-cl</code>、<code>nano-banana-2-4k-cl</code>、<code>nano-banana-fast</code>、<code>nano-banana</code>、<code>nano-banana-pro</code>、<code>nano-banana-pro-vt</code>、<code>nano-banana-pro-cl</code>、<code>nano-banana-pro-vip</code>、<code>nano-banana-pro-4k-vip</code></li>
+          <li><code>urls</code>（选填）：参考图 URL 或 Base64</li>
+          <li><code>prompt</code>（必填）：提示词</li>
+          <li><code>aspectRatio</code>（选填）：默认 <code>auto</code>，支持 <code>auto/1:1/16:9/9:16/4:3/3:4/3:2/2:3/5:4/4:5/21:9</code>；<code>nano-banana-2*</code> 额外支持 <code>1:4/4:1/1:8/8:1</code></li>
+          <li><code>imageSize</code>（选填）：默认 <code>1K</code>，支持 <code>1K/2K/4K</code>（不同模型有尺寸限制，分辨率越高生成越慢）</li>
+          <li><code>webHook</code>（选填）：默认 stream；传回调地址则以 POST 回调进度与结果；若走轮询 result，传 <code>"-1"</code> 立即返回任务 id</li>
+          <li><code>shutProgress</code>（选填）：<code>boolean</code>，默认 <code>false</code>，关闭进度只回最终结果（建议搭配 webhook）</li>
+        </ul>
+
+        <h3>webHook 返回</h3>
+        <pre class="code">{
+ "code": 0,
+ "msg": "success",
+ "data": { "id": "id" }
+}</pre>
+
+        <h3>流式 / webHook 响应结构</h3>
+        <pre class="code">{
+ "id": "xxxxx",
+ "results": [{
+   "url": "https://example.com/example.png",
+   "content": "这是一只可爱的猫咪在草地上玩耍"
+ }],
+ "progress": 100,
+ "status": "succeeded",
+ "failure_reason": "",
+ "error": ""
+}</pre>
+        <ul>
+          <li><code>status</code>：<code>running/succeeded/failed</code></li>
+          <li><code>failure_reason</code>：<code>output_moderation/input_moderation/error</code></li>
+          <li><code>url</code>：有效期 2 小时</li>
+        </ul>
+
+        <h2>获取结果接口</h2>
+        <p><code>POST /v1/draw/result</code></p>
+        <pre class="code">{ "id": "xxxxx" }</pre>
+        <pre class="code">{
+ "code": 0,
+ "data": {
+   "id": "xxxxx",
+   "results": [{"url": "https://example.com/example.png", "content": "这是一只可爱的猫咪在草地上玩耍"}],
+   "progress": 100,
+   "status": "succeeded",
+   "failure_reason": "",
+   "error": ""
+ },
+ "msg": "success"
+}</pre>
+      </article>
+    </main>
+  </div>
+
+  <script src="../assets/search-index.js"></script>
+  <script src="../assets/app.js"></script>
+</body>
+</html>
